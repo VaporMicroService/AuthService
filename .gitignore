@@ -1,0 +1,9 @@
+Packages
+Package.resolved
+.build
+xcuserdata
+*.xcodeproj
+*.env
+DerivedData/
+.DS_Store
+.env
