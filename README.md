@@ -5,8 +5,8 @@
     <a href="LICENSE">
         <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
     </a>
-    <a href="https://travis-ci.org/shial4/LookBackend">
-        <img src="https://travis-ci.com/shial4/LookBackend.svg?token=aLhCcvWcBgAsyShFpqGR&branch=master" alt="TravisCI" />
+    <a href="https://travis-ci.org/VaporMicroService/UserService">
+        <img src="https://travis-ci.com/VaporMicroService/UserService.svg?token=aLhCcvWcBgAsyShFpqGR&branch=master" alt="TravisCI" />
     </a>
     <a href="https://circleci.com/gh/vapor/api-template">
         <img src="https://circleci.com/gh/vapor/api-template.svg?style=shield" alt="Continuous Integration">
@@ -18,7 +18,7 @@
 
 ## Summary
 
-Look Backend is a web frontend and web server that is created with Vapor written in Swift.
+Simple user authentication and authorization that is created with Vapor written in Swift.
 
 ## Table of Contents
 * [Summary](#summary)
@@ -30,9 +30,7 @@ Look Backend is a web frontend and web server that is created with Vapor written
 
 ## Getting Started
 
-Getting Started guide, tutorials, and API reference [documentation](https://www.getpostman.com/collections/b57e308dfa164c867000).
-
-1. [Postman]()
+Getting Started guide, tutorials, and API reference take a look into unit tests.
 
 ## Contributing
 
