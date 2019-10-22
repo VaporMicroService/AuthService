@@ -27,6 +27,29 @@ Simple user authentication and authorization that is created with Vapor written 
 * [Contributing](#contributing)
 * [Community](#community)
 
+## Features
+
+1. Create User
+
+POST request `/create` with header `Content-Type application/json`
+Body
+
+```
+{
+  "name":"test",
+  "email":"test@test.com",
+  "password":"test123456",
+  "verifyPassword":"test123456"
+}
+```
+
+2. Login
+
+POST request `/login` with header `Basic Base64(email:password)`
+
+3. Verify token and get user id
+
+GET request `/id` with header `Bearer token_string`
 
 ## Getting Started
 
