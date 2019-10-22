@@ -30,12 +30,7 @@ struct UserController {
     
     //MARK: Boot
     func boot(router: Router) throws {
-        let usersRoute = router.grouped("v1", "users")
-//        usersRoute.get(use: getAllHandler)
-//        usersRoute.get(User.parameter, use: getHandler)
-//        usersRoute.get(User.parameter, "acronyms", use: getAcronymsHandler)
-        
-        
+        let usersRoute = router.grouped("users")
         
         let basicAuthMiddleware = User.basicAuthMiddleware(using: BCryptDigest())
         let basicAuthGroup = usersRoute.grouped(basicAuthMiddleware)

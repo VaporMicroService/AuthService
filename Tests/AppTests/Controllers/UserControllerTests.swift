@@ -24,7 +24,7 @@ final class UserControllerTests: XCTestCase {
         ("testUsersDeleteNotAuthenticated", testUsersRetriveNotAuthenticated),
     ]
     
-    let uri = "/v1/users/"
+    let uri = "/users/"
     var app: Application!
     var conn: PostgreSQLConnection!
     
@@ -45,7 +45,7 @@ final class UserControllerTests: XCTestCase {
         let credentials = BasicAuthorization(username: user.email, password: "password")
         var tokenHeaders = HTTPHeaders()
         tokenHeaders.basicAuthorization = credentials
-        let tokenResponse = try app.sendRequest(to: "\(uri)login", method: .POST, headers: tokenHeaders)
+        let tokenResponse = try app.sendRequest(to: "\(uri)login", method: .GET, headers: tokenHeaders)
         let token = try tokenResponse.content.syncDecode(UserToken.self)
         
         XCTAssertEqual(tokenResponse.http.status.code, 200)
@@ -56,7 +56,7 @@ final class UserControllerTests: XCTestCase {
         let credentials = BasicAuthorization(username: "nil@test.com", password: "password")
         var tokenHeaders = HTTPHeaders()
         tokenHeaders.basicAuthorization = credentials
-        let tokenResponse = try app.sendRequest(to: "\(uri)login", method: .POST, headers: tokenHeaders)
+        let tokenResponse = try app.sendRequest(to: "\(uri)login", method: .GET, headers: tokenHeaders)
         
         XCTAssertEqual(tokenResponse.http.status.code, 401)
     }
