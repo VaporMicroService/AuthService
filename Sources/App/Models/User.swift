@@ -4,6 +4,8 @@ import Vapor
 
 final class User: PostgreSQLModel {
     var id: Int?
+    var externalId: String?
+    var externalService: String?
     var name: String
     var email: String
     var passwordHash: String

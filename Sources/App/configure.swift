@@ -1,5 +1,6 @@
 import Authentication
 import FluentPostgreSQL
+import Imperial
 import Vapor
 
 /// Called before your application initializes.
@@ -22,6 +23,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     var middlewares = MiddlewareConfig() // Create _empty_ middleware config
     middlewares.use(SessionsMiddleware.self) // Enables sessions.
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
+    middlewares.use(SessionsMiddleware.self) // Imperial session management
     services.register(middlewares)
 
     let psqlConfig: PostgreSQLDatabaseConfig!

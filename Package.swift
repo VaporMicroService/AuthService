@@ -13,9 +13,11 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-postgresql.git", from: "1.0.0"),
         // 👤 Authentication and Authorization framework for Fluent.
         .package(url: "https://github.com/vapor/auth.git", from: "2.0.4"),
+        // 👥 Authentication and Authorization framework for exteral services.
+        .package(url: "https://github.com/vapor-community/Imperial.git", from: "0.8.0"),
     ],
     targets: [
-        .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor", "Authentication"]),
+        .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor", "Authentication", "Imperial"]),
         .target(name: "Run", dependencies: ["App"]),
         .testTarget(name: "AppTests", dependencies: ["App"])
     ]
