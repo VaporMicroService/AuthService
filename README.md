@@ -45,7 +45,14 @@ Body
 
 2. Login
 
-POST request `/login` with header `Basic Base64(email:password)`
+**Internal**
+
+GET request `/login` with header `Basic Base64(email:password)`
+
+**Facebook**
+
+GET request `/login-facebook/{FB_TOKEN}`
+
 
 3. Verify token and get user id
 
