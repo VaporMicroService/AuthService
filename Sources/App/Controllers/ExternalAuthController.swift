@@ -60,9 +60,10 @@ struct ExternalAuthController {
     }
     
     private func inspectAccessToken(on request: Request, token: String) throws -> Future<InspectData> {
-        guard let accessToken = Environment.get("FACEBOOK_ACCESS_TOKEN") else {
+        guard let appId = Environment.get("FACEBOOK_APP_ID"), let appSecret = Environment.get("FACEBOOK_APP_SECRET") else {
             throw Abort(.internalServerError)
         }
+        let accessToken = "\(appId)|\(appSecret)"
         let facebookInspectAPIURL = "https://graph.facebook.com/v3.2/debug_token?input_token=\(token)&access_token=\(accessToken)"
         return try request.client().get(facebookInspectAPIURL).map { response in
             guard response.http.status == .ok else {
