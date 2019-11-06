@@ -23,12 +23,11 @@ struct ExternalAuthController {
     }
     
     struct Inspect: Content {
-        var app_id: Int
+        var app_id: String
         var type: String
         var application: String
         var expires_at: Int
         var is_valid: Bool
-        var issued_at: Int
         var user_id: String
     }
     
@@ -48,12 +47,11 @@ struct ExternalAuthController {
                 throw Abort(.internalServerError)
             }
             return try self.getUserInfo(on: request, token: token).flatMap { userInfo in
-                return User.query(on: request).filter(\.externalId == userInfo.id).first()
-                    .flatMap { foundUser in
-                        guard let existingUser = foundUser else {
-                            return self.buildAndSaveNewUser(request: request, userInfo: userInfo)
-                        }
-                        return self.AuthenticateExistingUser(request: request, user: existingUser)
+                return User.query(on: request).filter(\.externalId == userInfo.id).first().flatMap { foundUser in
+                    guard let existingUser = foundUser else {
+                        return self.buildAndSaveNewUser(request: request, userInfo: userInfo)
+                    }
+                    return self.AuthenticateExistingUser(request: request, user: existingUser)
                 }
             }
         }
@@ -63,7 +61,7 @@ struct ExternalAuthController {
         guard let appId = Environment.get("FACEBOOK_APP_ID"), let appSecret = Environment.get("FACEBOOK_APP_SECRET") else {
             throw Abort(.internalServerError)
         }
-        let accessToken = "\(appId)|\(appSecret)"
+        let accessToken = "\(appId)|\(appSecret)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let facebookInspectAPIURL = "https://graph.facebook.com/v3.2/debug_token?input_token=\(token)&access_token=\(accessToken)"
         return try request.client().get(facebookInspectAPIURL).map { response in
             guard response.http.status == .ok else {
@@ -77,7 +75,7 @@ struct ExternalAuthController {
         }
     }
     
-    private func getUserInfo(on request: Request, token: String) throws -> Future<UserInfo> {
+    private func getUserInfo(on request: Request, token: String) throws -> Future<ExternalAuthController.UserInfo> {
         let facebookUserAPIURL = "https://graph.facebook.com/v3.2/me?fields=id,name,email&access_token=\(token)"
         return try request.client().get(facebookUserAPIURL).map { response in
             guard response.http.status == .ok else {
@@ -87,11 +85,11 @@ struct ExternalAuthController {
                     throw Abort(.internalServerError)
                 }
             }
-            return try response.content.syncDecode(UserInfo.self)
+            return try response.content.syncDecode(ExternalAuthController.UserInfo.self)
         }
     }
     
-    private func buildAndSaveNewUser(request: Request, userInfo: UserInfo) -> Future<UserToken> {
+    private func buildAndSaveNewUser(request: Request, userInfo: ExternalAuthController.UserInfo) -> Future<UserToken> {
         let user = User(name: userInfo.name, email: userInfo.email, passwordHash: UUID().uuidString)
         user.externalId = userInfo.id
         user.externalService = "facebook"

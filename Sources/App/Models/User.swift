@@ -38,11 +38,14 @@ extension User: Migration {
     static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
         return PostgreSQLDatabase.create(User.self, on: conn) { builder in
             builder.field(for: \.id, isIdentifier: true)
+            builder.field(for: \.externalId)
+            builder.field(for: \.externalService)
             builder.field(for: \.name)
             builder.field(for: \.email)
             builder.field(for: \.passwordHash)
             
             builder.unique(on: \.email)
+            builder.unique(on: \.externalId)
         }
     }
 }
