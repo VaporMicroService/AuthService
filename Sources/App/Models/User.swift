@@ -6,13 +6,11 @@ final class User: PostgreSQLModel {
     var id: Int?
     var externalId: String?
     var externalService: String?
-    var name: String
     var email: String
     var passwordHash: String
     
-    init(id: Int? = nil, name: String, email: String, passwordHash: String) {
+    init(id: Int? = nil, email: String, passwordHash: String) {
         self.id = id
-        self.name = name
         self.email = email
         self.passwordHash = passwordHash
     }
@@ -40,7 +38,6 @@ extension User: Migration {
             builder.field(for: \.id, isIdentifier: true)
             builder.field(for: \.externalId)
             builder.field(for: \.externalService)
-            builder.field(for: \.name)
             builder.field(for: \.email)
             builder.field(for: \.passwordHash)
             

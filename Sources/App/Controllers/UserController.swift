@@ -6,7 +6,6 @@ import FluentPostgreSQL
 struct UserController {
     // MARK: Content
     struct CreateRequest: Content {
-        var name: String
         var email: String
         var password: String
         var verifyPassword: String
@@ -14,12 +13,10 @@ struct UserController {
     
     struct UserResponse: Content {
         var id: Int
-        var name: String
         var email: String
         
         init(_ user: User) throws {
             self.id = try user.requireID()
-            self.name = user.name
             self.email = user.email
         }
     }
@@ -68,7 +65,7 @@ struct UserController {
             // hash user's password using BCrypt
             let hash = try BCrypt.hash(user.password)
             // save new user
-            return User(id: nil, name: user.name, email: user.email, passwordHash: hash)
+            return User(id: nil, email: user.email, passwordHash: hash)
                 .save(on: req)
         }.map { user in
             // map to public user response (omits password hash)

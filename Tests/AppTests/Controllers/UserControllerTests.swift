@@ -72,22 +72,20 @@ final class UserControllerTests: XCTestCase {
     }
     
     func testUsersCreate() throws {
-        let body = UserController.CreateRequest(name: "ABC", email: "abc@test.com", password: "password", verifyPassword: "password")
+        let body = UserController.CreateRequest(email: "abc@test.com", password: "password", verifyPassword: "password")
         let response = try app.sendRequest(to: "\(uri)create", method: .POST, body: body)
         let userResponse = try response.content.syncDecode(UserController.UserResponse.self)
         
         XCTAssertNotNil(userResponse.id)
-        XCTAssertEqual(userResponse.name, body.name)
         XCTAssertEqual(userResponse.email, body.email)
     }
     
     func testUsersCreateAlreadyExisting() throws {
-        let body = UserController.CreateRequest(name: "ABC", email: "abc@test.com", password: "password", verifyPassword: "password")
+        let body = UserController.CreateRequest(email: "abc@test.com", password: "password", verifyPassword: "password")
         let response = try app.sendRequest(to: "\(uri)create", method: .POST, body: body)
         let userResponse = try response.content.syncDecode(UserController.UserResponse.self)
         
         XCTAssertNotNil(userResponse.id)
-        XCTAssertEqual(userResponse.name, body.name)
         XCTAssertEqual(userResponse.email, body.email)
         
         let response2 = try app.sendRequest(to: "\(uri)create", method: .POST, body: body)
@@ -100,7 +98,6 @@ final class UserControllerTests: XCTestCase {
         let user = try User.create(name: userName, on: conn)
         let userResponse = try app.getResponse(to: "\(uri)\(try user.requireID())", decodeTo: UserController.UserResponse.self, userToLogin: user)
         
-        XCTAssertEqual(userResponse.name, userName)
         XCTAssertEqual(userResponse.id, user.id)
     }
     

@@ -14,7 +14,7 @@ extension User {
     static func create(name: String = "Luke",
                        on connection: PostgreSQLConnection) throws -> User {
         let password = try BCrypt.hash("password")
-        let user = User(name: name, email: "\(name.lowercased())@test.com", passwordHash: password)
+        let user = User(email: "\(name.lowercased())@test.com", passwordHash: password)
         return try user.save(on: connection).wait()
     }
 }

@@ -90,7 +90,7 @@ struct ExternalAuthController {
     }
     
     private func buildAndSaveNewUser(request: Request, userInfo: ExternalAuthController.UserInfo) -> Future<UserToken> {
-        let user = User(name: userInfo.name, email: userInfo.email, passwordHash: UUID().uuidString)
+        let user = User(email: userInfo.email, passwordHash: UUID().uuidString)
         user.externalId = userInfo.id
         user.externalService = "facebook"
         return user.save(on: request).flatMap { user in

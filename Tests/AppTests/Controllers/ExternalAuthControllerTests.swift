@@ -18,7 +18,7 @@ final class ExternalAuthControllerTests: XCTestCase {
         ("testFacebookLoginWrongToken", testFacebookLoginWrongToken),
     ]
     
-    let fbToken = "EAAUV9TmOZAP0BAEQZCg5pZALNjKgk5XZAUBOoicXdLRiZCJO4d4qH2jDpDZBx0ieOC8kGzRQKAXAbGFwP3jdk6ZA0lWCeEWCweX4bWUQNr3wBk9T00QWUQmX1Hm3zYI8h36MnRoUPEQLpZCAbxvWjZAGzPWmZA0ufsyzCMwzTZBn8GSlf5lRMQgCe41hZBhARY19QxOdaG3RsTXqVCZBrtM7J1jpl"
+    let fbToken = Environment.get("FACEBOOK_TEST_USER_TOKEN") ?? ""
     let uri = "/users/"
     var app: Application!
     var conn: PostgreSQLConnection!
