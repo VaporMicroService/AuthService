@@ -25,6 +25,5 @@ COPY --from=builder /build/bin/Run .
 COPY --from=builder /build/lib/* /usr/lib/
 
 ENV ENVIRONMENT=$env
-ENV PORT=$port
 
-ENTRYPOINT ./Run serve --env $ENVIRONMENT --hostname 0.0.0.0 --port $PORT
+ENTRYPOINT ./Run serve --env $ENVIRONMENT --hostname 0.0.0.0 --port 3001
