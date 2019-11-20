@@ -10,11 +10,15 @@ final class UserToken: PostgreSQLModel {
     }
     
     static var deletedAtKey: TimestampKey? { return \.expiresAt }
+    static var createdAtKey: TimestampKey? { return \.createdAt }
+    static var updatedAtKey: TimestampKey? { return \.updatedAt }
     
     var id: Int?
     var token: String
     var userID: User.ID
     var expiresAt: Date?
+    var createdAt: Date?
+    var updatedAt: Date?
     
     init(id: Int? = nil, token: String, userID: User.ID) {
         self.id = id
@@ -49,6 +53,8 @@ extension UserToken: Migration {
             builder.field(for: \.token)
             builder.field(for: \.userID)
             builder.field(for: \.expiresAt)
+            builder.field(for: \.createdAt)
+            builder.field(for: \.updatedAt)
             
             builder.reference(from: \.userID, to: \User.id, onDelete: .cascade)
         }

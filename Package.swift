@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "UserService",
+    name: "AuthService",
     products: [
-        .library(name: "UserService", targets: ["App"]),
+        .library(name: "AuthService", targets: ["App"]),
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
