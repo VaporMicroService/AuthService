@@ -23,7 +23,11 @@ final class UserToken: PostgreSQLModel {
     init(id: Int? = nil, token: String, userID: User.ID) {
         self.id = id
         self.token = token
-        self.expiresAt = Date.init(timeInterval: 60 * 60 * 5, since: .init())
+        if let interval = Environment.get("TOKEN_EXPIRATION_INTERVAL"), let time = Double(interval) {
+            self.expiresAt = Date.init(timeInterval: time, since: .init())
+        } else {
+            self.expiresAt = Date.init(timeInterval: 60 * 60 * 5, since: .init())
+        }
         self.userID = userID
     }
 }
